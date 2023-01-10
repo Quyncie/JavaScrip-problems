@@ -1,103 +1,148 @@
 <!DOCTYPE html>
 <html>
+  
   <head>
     <meta charset="utf-8">
-    <title>Page Title</title>
+    <title>
+      Page Title
+    </title>
+    <script>
+      function startGame() {
+        // Code for starting the game goes here
+        const timeLimit = 30; // Set the time limit for the game in seconds
+        let score = 0; // Set the score to 0
+        let timerInterval; // Declare a variable for the timer interval
+        // Set up the game
+        function setup() {
+          // Get the user's choice of operation
+          const operation = document.getElementById("operation").value;
+
+          // Reset the score
+          score = 0;
+
+          // Update the score display
+          document.getElementById("score").innerHTML = `Score: $ {
+            score
+          }`;
+
+          // Start the game loop
+          timerInterval = setInterval(gameLoop, 1000, operation);
+        }
+
+        // The game loop
+        function gameLoop(operation) {
+          // Generate two random numbers between 1 and 10
+          const num1 = Math.floor(Math.random() * 10) + 1;
+          const num2 = Math.floor(Math.random() * 10) + 1;
+
+          // Ask the user to solve the math problem
+          let question;
+          let answer;
+          switch (operation) {
+          case "+":
+            question = `What is $ {
+              num1
+            } + $ {
+              num2
+            } ? `;
+            answer = num1 + num2;
+            break;
+          case "-":
+            question = `What is $ {
+              num1
+            } - $ {
+              num2
+            } ? `;
+            answer = num1 - num2;
+            break;
+          case "*":
+            question = `What is $ {
+              num1
+            } * $ {
+              num2
+            } ? `;
+            answer = num1 * num2;
+            break;
+          case "/":
+            question = `What is $ {
+              num1
+            }
+            / ${num2}?`;
+            answer = num1 /num2;
+            break;
+          }
+          const userAnswer = prompt(question);
+
+          // Check if the answer is correct
+          if (userAnswer == answer) {
+            score++;
+          }
+
+          // Update the score display
+          document.getElementById("score").innerHTML = `Score: $ {
+            score
+          }`;
+
+          // Check if the time limit has been reached
+          if (timeLimit - (Date.now() - startTime) / 1000 <= 0) {
+            // Stop the game loop
+            clearInterval(timerInterval);
+
+            // Display the final score
+            alert(`Your score is $ {
+              score
+            } ! `);
+
+            // Ask if the user wants to play again
+            const playAgain = confirm("Do you want to play again?");
+            if (playAgain) {
+              setup();
+            }
+          }
+
+        }
+        setup()
+      }
+
+      document.getElementById("startGameButton").addEventListener('click',
+      function() {
+        startGame()
+      });
+    </script>
   </head>
+  
   <body>
-<h1>Math Facts Practice</h1>
-<p>Operation:</p>
-<button>Start Game</button>
-
-<form>
-  <label for="operation">Choose an operation:</label>
-  <select id="operation">
-    <option value="+">addition</option>
-    <option value="-">subtraction</option>
-    <option value="*">multiplication</option>
-    <option value="/">division</option>
-  </select>
-
-
-<button onclick="startGame()">Start Game</button>
-<script>
-function startGame() {
-  // Code for starting the game goes here
-
-const timeLimit = 30; // Set the time limit for the game in seconds
-let score = 0; // Set the score to 0
-let timerInterval; // Declare a variable for the timer interval
-
-// Set up the game
-function setup() {
-  // Get the user's choice of operation
-  const operation = document.getElementById("operation").value;
-
-  // Reset the score
-  score = 0;
-
-  // Update the score display
-  document.getElementById("score").innerHTML = `Score: ${score}`;
-
-  // Start the game loop
-  timerInterval = setInterval(gameLoop, 1000, operation);
-}
-
-// The game loop
-function gameLoop(operation) {
-  // Generate two random numbers between 1 and 10
-  const num1 = Math.floor(Math.random() * 10) + 1;
-  const num2 = Math.floor(Math.random() * 10) + 1;
-
-  // Ask the user to solve the math problem
-  let question;
-  let answer;
-  switch (operation) {
-    case "+":
-      question = `What is ${num1} + ${num2}?`;
-      answer = num1 + num2;
-      break;
-    case "-":
-      question = `What is ${num1} - ${num2}?`;
-      answer = num1 - num2;
-      break;
-    case "*":
-      question = `What is ${num1} * ${num2}?`;
-      answer = num1 * num2;
-      break;
-    case "/":
-      question = `What is ${num1} / ${num2}?`;
-      answer = num1 / num2;
-      break;
-  }
-  const userAnswer = prompt(question);
-
-  // Check if the answer is correct
-  if (userAnswer == answer) {
-    score++;
-  }
-
-  // Update the score display
-  document.getElementById("score").innerHTML = `Score: ${score}`;
-
-  // Check if the time limit has been reached
-  if (timeLimit - (Date.now() - startTime) / 1000 <= 0) {
-    // Stop the game loop
-    clearInterval(timerInterval);
-
-    // Display the final score
-    alert(`Your score is ${score}!`);
-
-    // Ask if the user wants to play again
-    const playAgain = confirm("Do you want to play again?");
-    if (playAgain) {
-      setup();
-    }
-  }
-}
-}
-</script>
-
+    <h1>
+      Math Facts Practice
+    </h1>
+    <p>
+      Operation:
+    </p>
+    <button id="startGameButton">
+      Start Game
+    </button>
+    <label for="operation">
+      Choose an operation:
+    </label>
+    <select id="operation">
+      <option value="+">
+        addition
+      </option>
+      <option value="-">
+        subtraction
+      </option>
+      <option value="*">
+        multiplication
+      </option>
+      <option value="/">
+        division
+      </option>
+    </select>
+    <span id="score">
+    </span>
+    <button>
+      Start Game
+    </button>
   </body>
-</html>
 
+</html>
